@@ -5,7 +5,19 @@
   </Configs>
   <NewExtensions/>
   <sounds name="sound"/>
-  <sprites name="sprites"/>
+  <sprites name="sprites">
+    <sprites name="tiles">
+      <sprite>sprites\spr_grass</sprite>
+      <sprite>sprites\spr_water</sprite>
+      <sprite>sprites\spr_asphalt</sprite>
+    </sprites>
+    <sprites name="city">
+      <sprite>sprites\spr_house_small</sprite>
+      <sprite>sprites\spr_house_big</sprite>
+      <sprite>sprites\spr_apartments</sprite>
+      <sprite>sprites\spr_building</sprite>
+    </sprites>
+  </sprites>
   <backgrounds name="background"/>
   <paths name="paths"/>
   <help>
