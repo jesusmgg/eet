@@ -43,8 +43,8 @@ block_end_y = 0;
 
 block_center = noone;
 
-probability_grow = 100;
-probability_new_block = 1000;
+probability_grow = 50;
+probability_new_block = 100;
 </string>
           </argument>
         </arguments>

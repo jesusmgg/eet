@@ -26,6 +26,16 @@
       <sprite>sprites\spr_node_high</sprite>
       <sprite>sprites\spr_substation</sprite>
     </sprites>
+    <sprites name="UI">
+      <sprite>sprites\spr_logo</sprite>
+      <sprite>sprites\spr_button_plant_coal</sprite>
+      <sprite>sprites\spr_button_plant_oil</sprite>
+      <sprite>sprites\spr_button_plant_nuclear</sprite>
+      <sprite>sprites\spr_button_plant_solar</sprite>
+      <sprite>sprites\spr_button_node_low</sprite>
+      <sprite>sprites\spr_button_node_high</sprite>
+      <sprite>sprites\spr_button_substation</sprite>
+    </sprites>
   </sprites>
   <backgrounds name="background">
     <background>background\bg_grass</background>
@@ -47,7 +57,6 @@
     </objects>
     <object>objects\obj_game_controller</object>
   </objects>
-  <timelines name="timelines"/>
   <rooms name="rooms">
     <room>rooms\rm_game</room>
   </rooms>
