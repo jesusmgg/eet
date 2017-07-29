@@ -27,8 +27,18 @@
       <sprite>sprites\spr_substation</sprite>
     </sprites>
   </sprites>
-  <backgrounds name="background"/>
+  <backgrounds name="background">
+    <background>background\bg_grass</background>
+  </backgrounds>
   <paths name="paths"/>
+  <objects name="objects">
+    <object>objects\obj_camera</object>
+    <object>objects\obj_water</object>
+    <object>objects\obj_asphalt</object>
+  </objects>
+  <rooms name="rooms">
+    <room>rooms\rm_game</room>
+  </rooms>
   <help>
     <rtf>help.rtf</rtf>
   </help>
