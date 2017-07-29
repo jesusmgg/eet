@@ -8,28 +8,34 @@
   <parentName>&lt;undefined&gt;</parentName>
   <maskName>&lt;undefined&gt;</maskName>
   <events>
-    <event eventtype="3" enumb="1">
+    <event eventtype="0" enumb="0">
       <action>
         <libid>1</libid>
-        <id>109</id>
-        <kind>0</kind>
-        <userelative>-1</userelative>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
         <isquestion>0</isquestion>
         <useapplyto>-1</useapplyto>
-        <exetype>1</exetype>
-        <functionname>action_move_to</functionname>
+        <exetype>2</exetype>
+        <functionname></functionname>
         <codestring></codestring>
         <whoName>self</whoName>
         <relative>0</relative>
         <isnot>0</isnot>
         <arguments>
           <argument>
-            <kind>0</kind>
-            <string>mouse_x</string>
-          </argument>
-          <argument>
-            <kind>0</kind>
-            <string>mouse_y</string>
+            <kind>1</kind>
+            <string>///Constants
+
+MAP_W = 128;
+MAP_H = 128;
+
+//grid_occupation tile status:
+TILE_FREE = 0;
+TILE_OCCUPIED = 1;
+TILE_RESERVED = 2;
+
+</string>
           </argument>
         </arguments>
       </action>
@@ -49,22 +55,40 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>///Control view and port size
+            <string>///Variables
 
-// Get the display size.
-displayW = window_get_width();
-displayH = window_get_height();
+game_controller = self;
 
-// Set the view to the display size.
-view_wview[0] = displayW;
-view_hview[0] = displayH;
+grid_occupation = ds_grid_create(MAP_W, MAP_H);
+ds_grid_clear(grid_occupation, game_controller.TILE_FREE);
 
-// Set the port to the display size.
-view_wport[0] = displayW;
-view_hport[0] = displayH;
+randomize();
+</string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>///Generate first block
 
-// Resize app surface to avoid distortion
-surface_resize(application_surface, displayW, displayH);
+var tile_x = irandom_range(7, 15);
+var tile_y = irandom_range(7, 15);
+
+generate_block(tile_x, tile_y, game_controller);
 </string>
           </argument>
         </arguments>

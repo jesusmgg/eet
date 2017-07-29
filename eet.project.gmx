@@ -31,11 +31,23 @@
     <background>background\bg_grass</background>
   </backgrounds>
   <paths name="paths"/>
+  <scripts name="scripts">
+    <script>scripts\generate_block.gml</script>
+  </scripts>
   <objects name="objects">
     <object>objects\obj_camera</object>
     <object>objects\obj_water</object>
     <object>objects\obj_asphalt</object>
+    <objects name="city">
+      <object>objects\obj_base_building</object>
+      <object>objects\obj_house_small</object>
+      <object>objects\obj_house_big</object>
+      <object>objects\obj_apartments</object>
+      <object>objects\obj_building</object>
+    </objects>
+    <object>objects\obj_game_controller</object>
   </objects>
+  <timelines name="timelines"/>
   <rooms name="rooms">
     <room>rooms\rm_game</room>
   </rooms>
