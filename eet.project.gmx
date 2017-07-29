@@ -17,6 +17,15 @@
       <sprite>sprites\spr_apartments</sprite>
       <sprite>sprites\spr_building</sprite>
     </sprites>
+    <sprites name="power">
+      <sprite>sprites\spr_plant_coal</sprite>
+      <sprite>sprites\spr_plant_oil</sprite>
+      <sprite>sprites\spr_plant_nuclear</sprite>
+      <sprite>sprites\spr_plant_solar</sprite>
+      <sprite>sprites\spr_node_low</sprite>
+      <sprite>sprites\spr_node_high</sprite>
+      <sprite>sprites\spr_substation</sprite>
+    </sprites>
   </sprites>
   <backgrounds name="background"/>
   <paths name="paths"/>
