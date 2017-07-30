@@ -129,13 +129,16 @@ stats_price = 0.04;
 stats_month = 1;
 stats_outages = 0;
 
-outage_timer = room_speed * 20;
+outage_timer = room_speed * 18;
 current_outage_timer = outage_timer;
 outage = false;
 
 month_counter = 0;
 
 ui_text_info = "Welcome!";
+
+game_over = false;
+game_over_timer = room_speed * 10;
 
 randomize();
 </string>
@@ -426,6 +429,7 @@ if (month_counter &gt;= room_speed * 60)
     audio_play_sound(snd_month_end, 10, false);
     
     month_counter = 0;
+    stats_outages = 0;
 }
 </string>
           </argument>
@@ -462,12 +466,16 @@ if (current_outage_timer &lt;= 0)
         }
         else if (stats_outages &lt; 3)
         {
-            show_popup("City won't allow another outage this month!", 5);
+            show_popup("The city won't tolerate#another outage this month!", 5);
             audio_play_sound(snd_bad, 10, false);    
         }
         else if (stats_outages &gt;= 3)
         {
-            //Game over  
+            var center_x = window_get_width() / 2;
+            var center_y = window_get_height() / 2;
+            instance_create(center_x, center_y, obj_game_over);
+            audio_play_sound(snd_bad, 10, false);
+            game_over = true;
         }
     
         current_outage_timer = outage_timer;
@@ -478,6 +486,37 @@ else
 {
     outage = false;
     current_outage_timer--;
+}
+</string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>///Game over
+
+if (game_over)
+{
+    game_over_timer--;
+    
+    if (game_over_timer &lt;= 0)
+    {
+        room_goto(rm_menu);
+    }
 }
 </string>
           </argument>
