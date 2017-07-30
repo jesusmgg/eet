@@ -5,7 +5,7 @@
   <visible>-1</visible>
   <depth>0</depth>
   <persistent>0</persistent>
-  <parentName>&lt;undefined&gt;</parentName>
+  <parentName>obj_base_ui</parentName>
   <maskName>&lt;undefined&gt;</maskName>
   <events>
     <event eventtype="0" enumb="0">
@@ -25,26 +25,18 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>///Constants
+            <string>///Inherit Create event from parent
 
-MAP_W = 128;
-MAP_H = 128;
-
-//grid_occupation tile status:
-TILE_FREE = 0;
-TILE_OCCUPIED = 1;
-TILE_RESERVED = 2;
-
-PADDING_X = 4;
+event_inherited();
 </string>
           </argument>
         </arguments>
       </action>
       <action>
         <libid>1</libid>
-        <id>603</id>
-        <kind>7</kind>
-        <userelative>0</userelative>
+        <id>611</id>
+        <kind>6</kind>
+        <userelative>-1</userelative>
         <isquestion>0</isquestion>
         <useapplyto>-1</useapplyto>
         <exetype>2</exetype>
@@ -56,23 +48,19 @@ PADDING_X = 4;
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>///Variables
-
-game_controller = self;
-
-grid_occupation = ds_grid_create(MAP_W, MAP_H);
-ds_grid_clear(grid_occupation, game_controller.TILE_FREE);
-
-randomize();
-</string>
+            <string>image_speed</string>
+          </argument>
+          <argument>
+            <kind>0</kind>
+            <string>0</string>
           </argument>
         </arguments>
       </action>
       <action>
         <libid>1</libid>
-        <id>603</id>
-        <kind>7</kind>
-        <userelative>0</userelative>
+        <id>611</id>
+        <kind>6</kind>
+        <userelative>-1</userelative>
         <isquestion>0</isquestion>
         <useapplyto>-1</useapplyto>
         <exetype>2</exetype>
@@ -84,128 +72,63 @@ randomize();
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>///Generate first block
-
-var tile_x = irandom_range(10, 16);
-var tile_y = irandom_range(10, 16);
-
-generate_block(tile_x, tile_y, game_controller);
-</string>
+            <string>image_index</string>
           </argument>
-        </arguments>
-      </action>
-      <action>
-        <libid>1</libid>
-        <id>603</id>
-        <kind>7</kind>
-        <userelative>0</userelative>
-        <isquestion>0</isquestion>
-        <useapplyto>-1</useapplyto>
-        <exetype>2</exetype>
-        <functionname></functionname>
-        <codestring></codestring>
-        <whoName>self</whoName>
-        <relative>0</relative>
-        <isnot>0</isnot>
-        <arguments>
           <argument>
-            <kind>1</kind>
-            <string>///Instantiate UI objects
-
-instance_create(63, 40, obj_button_plant_coal);
-instance_create(63, 120, obj_button_plant_oil);
-instance_create(63, 200, obj_button_plant_nuclear);
-instance_create(63, 280, obj_button_plant_solar);
-
-instance_create(63, 380, obj_button_node_low);
-instance_create(63, 460, obj_button_node_high);
-
-instance_create(63, 560, obj_button_substation);
-</string>
-          </argument>
-        </arguments>
-      </action>
-      <action>
-        <libid>1</libid>
-        <id>603</id>
-        <kind>7</kind>
-        <userelative>0</userelative>
-        <isquestion>0</isquestion>
-        <useapplyto>-1</useapplyto>
-        <exetype>2</exetype>
-        <functionname></functionname>
-        <codestring></codestring>
-        <whoName>self</whoName>
-        <relative>0</relative>
-        <isnot>0</isnot>
-        <arguments>
-          <argument>
-            <kind>1</kind>
-            <string>///Generate water (to pad game field for UI)
-
-
-
-for (var i=0;i&lt;game_controller.PADDING_X;i++)
-{
-    for (var j=0;j&lt;game_controller.MAP_H;j++)
-    {
-        instance_create(i*32, j*32, obj_water);
-        ds_grid_set(
-            game_controller.grid_occupation,
-            i, j,
-            game_controller.TILE_OCCUPIED
-        );
-    }
-}
-
-var limit = game_controller.MAP_W - 1 - game_controller.PADDING_X;
-for (var i=game_controller.MAP_W-1;i&gt;limit;i--)
-{
-    for (var j=0;j&lt;game_controller.MAP_H;j++)
-    {
-        instance_create(i*32, j*32, obj_water);
-        ds_grid_set(
-            game_controller.grid_occupation,
-            i, j,
-            game_controller.TILE_OCCUPIED
-        );
-    }
-}
-</string>
+            <kind>0</kind>
+            <string>0</string>
           </argument>
         </arguments>
       </action>
     </event>
-    <event eventtype="8" enumb="74">
+    <event eventtype="6" enumb="11">
       <action>
         <libid>1</libid>
-        <id>501</id>
-        <kind>0</kind>
+        <id>611</id>
+        <kind>6</kind>
         <userelative>-1</userelative>
         <isquestion>0</isquestion>
         <useapplyto>-1</useapplyto>
-        <exetype>1</exetype>
-        <functionname>action_draw_sprite</functionname>
+        <exetype>2</exetype>
+        <functionname></functionname>
         <codestring></codestring>
         <whoName>self</whoName>
         <relative>0</relative>
         <isnot>0</isnot>
         <arguments>
           <argument>
-            <kind>5</kind>
-            <sprite>spr_bg_power_buttons</sprite>
+            <kind>1</kind>
+            <string>image_index</string>
           </argument>
           <argument>
             <kind>0</kind>
             <string>0</string>
           </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="6" enumb="10">
+      <action>
+        <libid>1</libid>
+        <id>611</id>
+        <kind>6</kind>
+        <userelative>-1</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
           <argument>
-            <kind>0</kind>
-            <string>0</string>
+            <kind>1</kind>
+            <string>image_index</string>
           </argument>
           <argument>
             <kind>0</kind>
-            <string>-1</string>
+            <string>1</string>
           </argument>
         </arguments>
       </action>

@@ -28,13 +28,16 @@
     </sprites>
     <sprites name="UI">
       <sprite>sprites\spr_logo</sprite>
-      <sprite>sprites\spr_button_plant_coal</sprite>
-      <sprite>sprites\spr_button_plant_oil</sprite>
-      <sprite>sprites\spr_button_plant_nuclear</sprite>
-      <sprite>sprites\spr_button_plant_solar</sprite>
-      <sprite>sprites\spr_button_node_low</sprite>
-      <sprite>sprites\spr_button_node_high</sprite>
-      <sprite>sprites\spr_button_substation</sprite>
+      <sprites name="power">
+        <sprite>sprites\spr_button_plant_coal</sprite>
+        <sprite>sprites\spr_button_plant_oil</sprite>
+        <sprite>sprites\spr_button_plant_nuclear</sprite>
+        <sprite>sprites\spr_button_plant_solar</sprite>
+        <sprite>sprites\spr_button_node_low</sprite>
+        <sprite>sprites\spr_button_node_high</sprite>
+        <sprite>sprites\spr_button_substation</sprite>
+      </sprites>
+      <sprite>sprites\spr_bg_power_buttons</sprite>
     </sprites>
   </sprites>
   <backgrounds name="background">
@@ -56,6 +59,19 @@
       <object>objects\obj_building</object>
     </objects>
     <object>objects\obj_game_controller</object>
+    <objects name="UI">
+      <objects name="power">
+        <object>objects\obj_button_plant_coal</object>
+        <object>objects\obj_button_plant_oil</object>
+        <object>objects\obj_button_plant_nuclear</object>
+        <object>objects\obj_button_plant_solar</object>
+        <object>objects\obj_button_node_low</object>
+        <object>objects\obj_button_node_high</object>
+        <object>objects\obj_button_substation</object>
+      </objects>
+      <object>objects\obj_base_button</object>
+      <object>objects\obj_base_ui</object>
+    </objects>
   </objects>
   <rooms name="rooms">
     <room>rooms\rm_game</room>

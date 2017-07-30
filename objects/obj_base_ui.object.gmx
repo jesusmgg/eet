@@ -25,187 +25,87 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>///Constants
-
-MAP_W = 128;
-MAP_H = 128;
-
-//grid_occupation tile status:
-TILE_FREE = 0;
-TILE_OCCUPIED = 1;
-TILE_RESERVED = 2;
-
-PADDING_X = 4;
-</string>
-          </argument>
-        </arguments>
-      </action>
-      <action>
-        <libid>1</libid>
-        <id>603</id>
-        <kind>7</kind>
-        <userelative>0</userelative>
-        <isquestion>0</isquestion>
-        <useapplyto>-1</useapplyto>
-        <exetype>2</exetype>
-        <functionname></functionname>
-        <codestring></codestring>
-        <whoName>self</whoName>
-        <relative>0</relative>
-        <isnot>0</isnot>
-        <arguments>
-          <argument>
-            <kind>1</kind>
             <string>///Variables
 
-game_controller = self;
+start_x = x;
+start_y = y;
 
-grid_occupation = ds_grid_create(MAP_W, MAP_H);
-ds_grid_clear(grid_occupation, game_controller.TILE_FREE);
-
-randomize();
-</string>
-          </argument>
-        </arguments>
-      </action>
-      <action>
-        <libid>1</libid>
-        <id>603</id>
-        <kind>7</kind>
-        <userelative>0</userelative>
-        <isquestion>0</isquestion>
-        <useapplyto>-1</useapplyto>
-        <exetype>2</exetype>
-        <functionname></functionname>
-        <codestring></codestring>
-        <whoName>self</whoName>
-        <relative>0</relative>
-        <isnot>0</isnot>
-        <arguments>
-          <argument>
-            <kind>1</kind>
-            <string>///Generate first block
-
-var tile_x = irandom_range(10, 16);
-var tile_y = irandom_range(10, 16);
-
-generate_block(tile_x, tile_y, game_controller);
-</string>
-          </argument>
-        </arguments>
-      </action>
-      <action>
-        <libid>1</libid>
-        <id>603</id>
-        <kind>7</kind>
-        <userelative>0</userelative>
-        <isquestion>0</isquestion>
-        <useapplyto>-1</useapplyto>
-        <exetype>2</exetype>
-        <functionname></functionname>
-        <codestring></codestring>
-        <whoName>self</whoName>
-        <relative>0</relative>
-        <isnot>0</isnot>
-        <arguments>
-          <argument>
-            <kind>1</kind>
-            <string>///Instantiate UI objects
-
-instance_create(63, 40, obj_button_plant_coal);
-instance_create(63, 120, obj_button_plant_oil);
-instance_create(63, 200, obj_button_plant_nuclear);
-instance_create(63, 280, obj_button_plant_solar);
-
-instance_create(63, 380, obj_button_node_low);
-instance_create(63, 460, obj_button_node_high);
-
-instance_create(63, 560, obj_button_substation);
-</string>
-          </argument>
-        </arguments>
-      </action>
-      <action>
-        <libid>1</libid>
-        <id>603</id>
-        <kind>7</kind>
-        <userelative>0</userelative>
-        <isquestion>0</isquestion>
-        <useapplyto>-1</useapplyto>
-        <exetype>2</exetype>
-        <functionname></functionname>
-        <codestring></codestring>
-        <whoName>self</whoName>
-        <relative>0</relative>
-        <isnot>0</isnot>
-        <arguments>
-          <argument>
-            <kind>1</kind>
-            <string>///Generate water (to pad game field for UI)
-
-
-
-for (var i=0;i&lt;game_controller.PADDING_X;i++)
-{
-    for (var j=0;j&lt;game_controller.MAP_H;j++)
-    {
-        instance_create(i*32, j*32, obj_water);
-        ds_grid_set(
-            game_controller.grid_occupation,
-            i, j,
-            game_controller.TILE_OCCUPIED
-        );
-    }
-}
-
-var limit = game_controller.MAP_W - 1 - game_controller.PADDING_X;
-for (var i=game_controller.MAP_W-1;i&gt;limit;i--)
-{
-    for (var j=0;j&lt;game_controller.MAP_H;j++)
-    {
-        instance_create(i*32, j*32, obj_water);
-        ds_grid_set(
-            game_controller.grid_occupation,
-            i, j,
-            game_controller.TILE_OCCUPIED
-        );
-    }
-}
+depth = -1000;
 </string>
           </argument>
         </arguments>
       </action>
     </event>
-    <event eventtype="8" enumb="74">
+    <event eventtype="3" enumb="1">
       <action>
         <libid>1</libid>
-        <id>501</id>
-        <kind>0</kind>
-        <userelative>-1</userelative>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
         <isquestion>0</isquestion>
         <useapplyto>-1</useapplyto>
-        <exetype>1</exetype>
-        <functionname>action_draw_sprite</functionname>
+        <exetype>2</exetype>
+        <functionname></functionname>
         <codestring></codestring>
         <whoName>self</whoName>
         <relative>0</relative>
         <isnot>0</isnot>
         <arguments>
           <argument>
-            <kind>5</kind>
-            <sprite>spr_bg_power_buttons</sprite>
+            <kind>1</kind>
+            <string>///Update position
+
+x = start_x + view_xview[0];
+y = start_y + view_yview[0];
+</string>
           </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="8" enumb="64">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
           <argument>
-            <kind>0</kind>
-            <string>0</string>
+            <kind>1</kind>
+            <string>///Draw sprite
+
+draw_sprite_ext(sprite_index, image_index, start_x, start_y, image_xscale, image_yscale, image_angle, image_blend, image_alpha);
+</string>
           </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="8" enumb="0">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
           <argument>
-            <kind>0</kind>
-            <string>0</string>
-          </argument>
-          <argument>
-            <kind>0</kind>
-            <string>-1</string>
+            <kind>1</kind>
+            <string>///Disable Draw event
+</string>
           </argument>
         </arguments>
       </action>
