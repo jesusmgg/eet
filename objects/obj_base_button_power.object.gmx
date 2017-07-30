@@ -5,7 +5,7 @@
   <visible>-1</visible>
   <depth>0</depth>
   <persistent>0</persistent>
-  <parentName>obj_base_ui</parentName>
+  <parentName>obj_base_button</parentName>
   <maskName>&lt;undefined&gt;</maskName>
   <events>
     <event eventtype="0" enumb="0">
@@ -34,9 +34,9 @@ event_inherited();
       </action>
       <action>
         <libid>1</libid>
-        <id>611</id>
-        <kind>6</kind>
-        <userelative>-1</userelative>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
         <isquestion>0</isquestion>
         <useapplyto>-1</useapplyto>
         <exetype>2</exetype>
@@ -48,45 +48,23 @@ event_inherited();
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>image_speed</string>
-          </argument>
-          <argument>
-            <kind>0</kind>
-            <string>0</string>
-          </argument>
-        </arguments>
-      </action>
-      <action>
-        <libid>1</libid>
-        <id>611</id>
-        <kind>6</kind>
-        <userelative>-1</userelative>
-        <isquestion>0</isquestion>
-        <useapplyto>-1</useapplyto>
-        <exetype>2</exetype>
-        <functionname></functionname>
-        <codestring></codestring>
-        <whoName>self</whoName>
-        <relative>0</relative>
-        <isnot>0</isnot>
-        <arguments>
-          <argument>
-            <kind>1</kind>
-            <string>image_index</string>
-          </argument>
-          <argument>
-            <kind>0</kind>
-            <string>0</string>
+            <string>///Variables
+
+name = "";
+cost = 0.0;
+power_generated = 0;
+pollution = 0;
+</string>
           </argument>
         </arguments>
       </action>
     </event>
-    <event eventtype="6" enumb="11">
+    <event eventtype="3" enumb="1">
       <action>
         <libid>1</libid>
-        <id>611</id>
-        <kind>6</kind>
-        <userelative>-1</userelative>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
         <isquestion>0</isquestion>
         <useapplyto>-1</useapplyto>
         <exetype>2</exetype>
@@ -98,11 +76,35 @@ event_inherited();
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>image_index</string>
+            <string>///Inherit event
+
+event_inherited();
+</string>
           </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="6" enumb="10">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
           <argument>
-            <kind>0</kind>
-            <string>0</string>
+            <kind>1</kind>
+            <string>///Inherit event
+
+event_inherited();
+</string>
           </argument>
         </arguments>
       </action>
@@ -124,7 +126,10 @@ event_inherited();
             <kind>1</kind>
             <string>///Set info text
 
-var info = "";
+var info = name + "
+Cost: $" + string(cost) + "
+Production: " + string(power_generated) + "kWh
+Pollution: " + string(pollution) + "%";
 
 game_controller.ui_text_info = info;
 </string>
@@ -132,12 +137,12 @@ game_controller.ui_text_info = info;
         </arguments>
       </action>
     </event>
-    <event eventtype="6" enumb="10">
+    <event eventtype="6" enumb="0">
       <action>
         <libid>1</libid>
-        <id>611</id>
-        <kind>6</kind>
-        <userelative>-1</userelative>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
         <isquestion>0</isquestion>
         <useapplyto>-1</useapplyto>
         <exetype>2</exetype>
@@ -149,11 +154,40 @@ game_controller.ui_text_info = info;
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>image_index</string>
+            <string>///Inherit event
+
+event_inherited();
+</string>
           </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
           <argument>
-            <kind>0</kind>
-            <string>1</string>
+            <kind>1</kind>
+            <string>///Prepare to build
+
+if (game_controller.stats_money &lt; cost)
+{
+    show_popup("Not enough money", 3);
+}
+else
+{
+    bind_object_to_selection(object_to_create, game_controller);
+}
+</string>
           </argument>
         </arguments>
       </action>

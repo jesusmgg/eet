@@ -30,12 +30,47 @@
 MAP_W = 128;
 MAP_H = 64;
 
+PADDING_X = 5;
+
 //grid_occupation tile status:
 TILE_FREE = 0;
 TILE_OCCUPIED = 1;
 TILE_RESERVED = 2;
 
-PADDING_X = 5;
+TILE_POWERED_TRUE = 1;
+TILE_POWERED_FALSE = 3;
+
+TILE_VALUE_LOW = 3;
+TILE_VALUE_HIGH = 1;
+
+//Gameplay values:
+NODE_LOW_RANGE = 4;
+NODE_HIGH_RANGE = 2;
+POWER_PLANT_DISLIKE_RANGE = 12;
+SUBSTATION_DISLIKE_RANGE = 4;
+NODE_HIGH_DISLIKE_RANGE = 2;
+
+PLANT_COAL_COST = 10000.0;
+PLANT_COAL_POLLUTION = 15;
+PLANT_COAL_POWER_GENERATED = 5000;
+
+PLANT_OIL_COST = 25000.0;
+PLANT_OIL_POLLUTION = 10;
+PLANT_OIL_POWER_GENERATED = 7500;
+
+PLANT_NUCLEAR_COST = 100000.0;
+PLANT_NUCLEAR_POLLUTION = 5;
+PLANT_NUCLEAR_POWER_GENERATED = 15000;
+
+PLANT_SOLAR_COST = 150000.0;
+PLANT_SOLAR_POLLUTION = 1;
+PLANT_SOLAR_POWER_GENERATED = 5000;
+
+NODE_LOW_COST = 20.0;
+NODE_HIGH_COST = 50.0;
+
+SUBSTATION_COST = 1000.0;
+
 </string>
           </argument>
         </arguments>
@@ -61,45 +96,28 @@ PADDING_X = 5;
 game_controller = self;
 selection_object = noone;
 
+show_grid_powered = false;
+show_grid_value = false;
+
 grid_occupation = ds_grid_create(MAP_W, MAP_H);
 ds_grid_clear(grid_occupation, game_controller.TILE_FREE);
 
+grid_powered = ds_grid_create(MAP_W, MAP_H);
+ds_grid_clear(grid_powered, game_controller.TILE_POWERED_FALSE);
+
+grid_value = ds_grid_create(MAP_W, MAP_H);
+ds_grid_clear(grid_value, game_controller.TILE_VALUE_HIGH);
+
 stats_pollution = 0;
-stats_money = 0.0;
+stats_money = 15000.0;
 stats_power_generated = 0;
 stats_power_consumed = 0;
 stats_tax = 0;
-stats_price = 0.0;
+stats_price = 0.04;
 
 ui_text_info = "Welcome!";
 
 randomize();
-</string>
-          </argument>
-        </arguments>
-      </action>
-      <action>
-        <libid>1</libid>
-        <id>603</id>
-        <kind>7</kind>
-        <userelative>0</userelative>
-        <isquestion>0</isquestion>
-        <useapplyto>-1</useapplyto>
-        <exetype>2</exetype>
-        <functionname></functionname>
-        <codestring></codestring>
-        <whoName>self</whoName>
-        <relative>0</relative>
-        <isnot>0</isnot>
-        <arguments>
-          <argument>
-            <kind>1</kind>
-            <string>///Generate first block
-
-var tile_x = irandom_range(24, 36);
-var tile_y = irandom_range(16, 24);
-
-generate_block(tile_x, tile_y, game_controller);
 </string>
           </argument>
         </arguments>
@@ -141,6 +159,39 @@ button_node_low.game_controller = self;
 button_node_high.game_controller = self;
 
 button_substation.game_controller = self;
+
+var position_x = window_get_width() - 64;
+var button_power = instance_create(position_x, 420, obj_button_power);
+var button_value = instance_create(position_x, 480, obj_button_value);
+
+button_power.game_controller = self;
+button_value.game_controller = self;
+
+</string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>///Instantiate selection object
+
+selection_object = instance_create(0, 0, obj_selection);
+selection_object.game_controller = self;
+
 </string>
           </argument>
         </arguments>
@@ -209,11 +260,12 @@ for (var i=game_controller.MAP_W-1;i&gt;limit;i--)
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>///Instantiate selection object
+            <string>///Generate first block
 
-selection_object = instance_create(0, 0, obj_selection);
-selection_object.game_controller = self;
+var tile_x = irandom_range(24, 36);
+var tile_y = irandom_range(16, 24);
 
+generate_block(tile_x, tile_y, game_controller);
 </string>
           </argument>
         </arguments>
@@ -308,7 +360,7 @@ selection_object.game_controller = self;
           </argument>
           <argument>
             <kind>0</kind>
-            <string>640 - 84</string>
+            <string>640 - 74</string>
           </argument>
           <argument>
             <kind>0</kind>
@@ -339,6 +391,7 @@ selection_object.game_controller = self;
 var text_x = window_get_width() - 124;
 
 draw_set_colour(c_black);
+draw_set_halign(fa_left);
 
 draw_set_font(fnt_arial_12);
 draw_text(text_x, 20, "Info:");
@@ -361,13 +414,13 @@ draw_set_font(fnt_arial_10);
 draw_text(text_x, 240, "Money:");
 draw_text(text_x + 45, 240, "$" + string(stats_money));
 draw_text(text_x, 260, "Price:");
-draw_text(text_x + 40, 260, string(stats_money) + " $/kWh");
+draw_text(text_x + 40, 260, string(stats_price) + " $/kWh");
 draw_text(text_x, 280, "Tax:");
 draw_text(text_x + 35, 280, string(stats_tax) + "%");
 
 draw_set_font(fnt_arial_8);
 draw_set_halign(fa_center);
-draw_text(window_get_width()-64, 580, "Electric Energy Tycoon");
+draw_text(window_get_width()-64, 590, "Electric Energy Tycoon");
 
 draw_set_halign(fa_left);
 draw_set_font(fnt_arial_10);

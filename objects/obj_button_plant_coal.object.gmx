@@ -5,7 +5,7 @@
   <visible>-1</visible>
   <depth>0</depth>
   <persistent>0</persistent>
-  <parentName>obj_base_button</parentName>
+  <parentName>obj_base_button_power</parentName>
   <maskName>&lt;undefined&gt;</maskName>
   <events>
     <event eventtype="0" enumb="0">
@@ -34,9 +34,9 @@ event_inherited();
       </action>
       <action>
         <libid>1</libid>
-        <id>611</id>
-        <kind>6</kind>
-        <userelative>-1</userelative>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
         <isquestion>0</isquestion>
         <useapplyto>-1</useapplyto>
         <exetype>2</exetype>
@@ -48,16 +48,16 @@ event_inherited();
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>object_to_create</string>
-          </argument>
-          <argument>
-            <kind>0</kind>
-            <string>obj_plant_coal</string>
+            <string>///Variables
+
+object_to_create = obj_plant_coal;
+name = "Coal Power Plant";
+</string>
           </argument>
         </arguments>
       </action>
     </event>
-    <event eventtype="6" enumb="0">
+    <event eventtype="3" enumb="1">
       <action>
         <libid>1</libid>
         <id>603</id>
@@ -74,9 +74,39 @@ event_inherited();
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>///Prepare to build
+            <string>///Inherit event
 
-bind_object_to_selection(object_to_create, game_controller);
+event_inherited();
+</string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>///Initialize
+
+if (!initialized)
+{
+    cost = game_controller.PLANT_COAL_COST;
+    pollution = game_controller.PLANT_COAL_POLLUTION;
+    power_generated = game_controller.PLANT_COAL_POWER_GENERATED;
+    
+    initialized = true;
+}
 </string>
           </argument>
         </arguments>

@@ -43,14 +43,45 @@ block_end_y = 0;
 
 block_center = noone;
 
-probability_grow = 200;
-probability_new_block = 1000;
+powered = 1;
+value = 1;
+
+base_probability_grow = 200;
+base_probability_new_block = 1000;
+
+probability_grow = base_probability_grow;
+probability_new_block = base_probability_new_block;
+
 </string>
           </argument>
         </arguments>
       </action>
     </event>
     <event eventtype="3" enumb="0">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>///Adjust probabilities
+
+probability_grow = base_probability_grow * powered * value;
+probability_new_block = base_probability_new_block * powered * value;
+</string>
+          </argument>
+        </arguments>
+      </action>
       <action>
         <libid>1</libid>
         <id>603</id>

@@ -39,6 +39,9 @@
         <sprite>sprites\spr_button_substation</sprite>
       </sprites>
       <sprite>sprites\spr_bg_power_buttons</sprite>
+      <sprite>sprites\spr_bg_popup</sprite>
+      <sprite>sprites\spr_button_power</sprite>
+      <sprite>sprites\spr_button_value</sprite>
     </sprites>
     <sprite>sprites\spr_selection_white</sprite>
     <sprite>sprites\spr_selection_red</sprite>
@@ -50,6 +53,7 @@
   <paths name="paths"/>
   <scripts name="scripts">
     <script>scripts\generate_block.gml</script>
+    <script>scripts\show_popup.gml</script>
     <script>scripts\bind_object_to_selection.gml</script>
   </scripts>
   <fonts name="fonts">
@@ -74,8 +78,16 @@
     <objects name="power">
       <object>objects\obj_base_power</object>
       <object>objects\obj_plant_coal</object>
+      <object>objects\obj_plant_oil</object>
+      <object>objects\obj_plant_nuclear</object>
+      <object>objects\obj_plant_solar</object>
+      <object>objects\obj_node_low</object>
+      <object>objects\obj_node_high</object>
+      <object>objects\obj_substation</object>
     </objects>
     <objects name="UI">
+      <object>objects\obj_button_power</object>
+      <object>objects\obj_button_value</object>
       <objects name="power">
         <object>objects\obj_button_plant_coal</object>
         <object>objects\obj_button_plant_oil</object>
@@ -84,9 +96,11 @@
         <object>objects\obj_button_node_low</object>
         <object>objects\obj_button_node_high</object>
         <object>objects\obj_button_substation</object>
+        <object>objects\obj_base_button_power</object>
       </objects>
       <object>objects\obj_base_button</object>
       <object>objects\obj_base_ui</object>
+      <object>objects\obj_popup</object>
     </objects>
   </objects>
   <rooms name="rooms">
