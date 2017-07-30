@@ -50,7 +50,7 @@ event_inherited();
             <kind>1</kind>
             <string>///Variables
 
-object_to_create = obj_node_low;
+object_to_create = obj_node_high;
 name = "Power Line Node
 High Voltage
 Plants to SubST";

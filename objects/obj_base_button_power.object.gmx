@@ -182,6 +182,7 @@ event_inherited();
 if (game_controller.stats_money &lt; cost)
 {
     show_popup("Not enough money", 3);
+    audio_play_sound(snd_error, 10, false);
 }
 else
 {

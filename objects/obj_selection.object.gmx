@@ -68,7 +68,7 @@ y = tile_y * 32;
         </arguments>
       </action>
     </event>
-    <event eventtype="6" enumb="1">
+    <event eventtype="6" enumb="5">
       <action>
         <libid>1</libid>
         <id>603</id>
@@ -89,6 +89,72 @@ y = tile_y * 32;
 
 bound_object = noone;
 extra_sprite = noone;
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="6" enumb="4">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>///Build bound object
+
+if (bound_object)
+{
+    var tile_status = ds_grid_get(game_controller.grid_occupation, tile_x, tile_y);
+    if (tile_status == game_controller.TILE_FREE)
+    {
+        var object = instance_create(tile_x*32, tile_y*32, bound_object);
+        ds_grid_set(
+            game_controller.grid_occupation, 
+            tile_x, tile_y, 
+            game_controller.TILE_OCCUPIED
+        );
+        
+        object.game_controller = game_controller;
+        object.tile_x = tile_x;
+        object.tile_y = tile_y;
+        
+        audio_play_sound(snd_button_1, 10, false);
+    }
+}
+
+if (bound_object != obj_node_low &amp;&amp; bound_object != obj_node_high)
+{
+    bound_object = noone;
+    extra_sprite = noone;
+}
+else if (bound_object == obj_node_low 
+         &amp;&amp; game_controller.stats_money &lt; game_controller.NODE_LOW_COST)
+{
+    bound_object = noone;
+    extra_sprite = noone;
+    show_popup("Not enough money", 3);
+    audio_play_sound(snd_error, 10, false);
+}
+else if (bound_object == obj_node_high 
+         &amp;&amp; game_controller.stats_money &lt; game_controller.NODE_HIGH_COST)
+{
+    bound_object = noone;
+    extra_sprite = noone;
+    show_popup("Not enough money", 3);
+    audio_play_sound(snd_error, 10, false);
+}
+    
 </string>
           </argument>
         </arguments>
@@ -121,6 +187,62 @@ if (extra_sprite)
     if (tile_status == game_controller.TILE_FREE) {sprite_index = spr_selection_green;}
     else {sprite_index = spr_selection_red;}
     
+    if (bound_object)
+    {
+        var connection_range = 0;
+        if (bound_object == obj_node_low)
+        {
+            connection_range = game_controller.NODE_LOW_CONNECTION_RANGE;
+        }
+        if (bound_object == obj_node_high)
+        {
+            connection_range = game_controller.NODE_HIGH_CONNECTION_RANGE;
+        }
+        
+        if (connection_range &gt; 0)
+        {
+            var start_x = tile_x - connection_range;
+            var start_y = tile_y - connection_range;
+            var end_x = tile_x + connection_range;
+            var end_y = tile_y + connection_range;
+            
+            for (var i=start_x; i&lt;=end_x; i++)
+            {
+                for (var j=start_y; j&lt;=end_y; j++)
+                {
+                    var object = instance_position(i*32, j*32, obj_base_power);
+                                
+                    if (object)
+                    {
+                        if (bound_object == obj_node_low)
+                        {                        
+                            var line_width = 1;
+                            if (object.object_index != obj_node_low
+                                &amp;&amp; object.object_index != obj_substation)
+                            {
+                                break;
+                            }
+                        }
+                        else if (bound_object == obj_node_high)
+                        {                        
+                            var line_width = 2;
+                            if (object.object_index == obj_node_low)
+                            {
+                                break;
+                            }
+                        }
+                        
+                        var pos_x = tile_x * 32 + 15;
+                        var pos_y = tile_y * 32 + 15;
+                        var obj_x = object.x + 15;
+                        var obj_y = object.y + 15;
+                        draw_set_colour(c_gray);
+                        draw_line_width(pos_x, pos_y, obj_x, obj_y, line_width);
+                    }
+                }
+            }
+        }
+    }    
 }
 else
 {

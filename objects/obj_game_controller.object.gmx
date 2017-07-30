@@ -32,45 +32,51 @@ MAP_H = 64;
 
 PADDING_X = 5;
 
-//grid_occupation tile status:
+//Grids tile values:
 TILE_FREE = 0;
 TILE_OCCUPIED = 1;
 TILE_RESERVED = 2;
 
 TILE_POWERED_TRUE = 1;
-TILE_POWERED_FALSE = 3;
+TILE_POWERED_FALSE = 10;
 
-TILE_VALUE_LOW = 3;
+TILE_VALUE_LOW = 5;
 TILE_VALUE_HIGH = 1;
 
 //Gameplay values:
 NODE_LOW_RANGE = 4;
-NODE_HIGH_RANGE = 2;
-POWER_PLANT_DISLIKE_RANGE = 12;
-SUBSTATION_DISLIKE_RANGE = 4;
+NODE_HIGH_RANGE = 0;
+NODE_LOW_CONNECTION_RANGE = 5;
+NODE_HIGH_CONNECTION_RANGE = 8;
+POWER_PLANT_DISLIKE_RANGE = 8;
+SUBSTATION_DISLIKE_RANGE = 3;
 NODE_HIGH_DISLIKE_RANGE = 2;
 
-PLANT_COAL_COST = 10000.0;
+PLANT_COAL_COST = 5000.0;
 PLANT_COAL_POLLUTION = 15;
-PLANT_COAL_POWER_GENERATED = 5000;
+PLANT_COAL_POWER_GENERATED = 20000;
 
-PLANT_OIL_COST = 25000.0;
+PLANT_OIL_COST = 10000.0;
 PLANT_OIL_POLLUTION = 10;
-PLANT_OIL_POWER_GENERATED = 7500;
+PLANT_OIL_POWER_GENERATED = 40000;
 
-PLANT_NUCLEAR_COST = 100000.0;
+PLANT_NUCLEAR_COST = 50000.0;
 PLANT_NUCLEAR_POLLUTION = 5;
-PLANT_NUCLEAR_POWER_GENERATED = 15000;
+PLANT_NUCLEAR_POWER_GENERATED = 100000;
 
-PLANT_SOLAR_COST = 150000.0;
+PLANT_SOLAR_COST = 70000.0;
 PLANT_SOLAR_POLLUTION = 1;
-PLANT_SOLAR_POWER_GENERATED = 5000;
+PLANT_SOLAR_POWER_GENERATED = 30000;
 
-NODE_LOW_COST = 20.0;
-NODE_HIGH_COST = 50.0;
+NODE_LOW_COST = 100.0;
+NODE_HIGH_COST = 500.0;
 
-SUBSTATION_COST = 1000.0;
+SUBSTATION_COST = 2500.0;
 
+HOUSE_SMALL_POWER_CONSUMED = 500;
+HOUSE_BIG_POWER_CONSUMED = 1000;
+APARTMENTS_POWER_CONSUMED = 5000;
+BUILDING_POWER_CONSUMED = 10000;
 </string>
           </argument>
         </arguments>
@@ -108,12 +114,26 @@ ds_grid_clear(grid_powered, game_controller.TILE_POWERED_FALSE);
 grid_value = ds_grid_create(MAP_W, MAP_H);
 ds_grid_clear(grid_value, game_controller.TILE_VALUE_HIGH);
 
+grid_power_required = ds_grid_create(MAP_W, MAP_H);
+ds_grid_clear(grid_power_required, 0);
+
+grid_power_delivered = ds_grid_create(MAP_W, MAP_H);
+ds_grid_clear(grid_power_delivered, 0);
+
 stats_pollution = 0;
-stats_money = 15000.0;
+stats_money = 9000.0;
 stats_power_generated = 0;
 stats_power_consumed = 0;
 stats_tax = 0;
 stats_price = 0.04;
+stats_month = 1;
+stats_outages = 0;
+
+outage_timer = room_speed * 20;
+current_outage_timer = outage_timer;
+outage = false;
+
+month_counter = 0;
 
 ui_text_info = "Welcome!";
 
@@ -270,6 +290,200 @@ generate_block(tile_x, tile_y, game_controller);
         </arguments>
       </action>
     </event>
+    <event eventtype="1" enumb="0">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>///Destroy data structures
+
+ds_grid_destroy(grid_occupation);
+ds_grid_destroy(grid_powered);
+ds_grid_destroy(grid_value);
+ds_grid_destroy(grid_power_required);
+ds_grid_destroy(grid_power_delivered);
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="3" enumb="0">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>///Update power consumed
+
+stats_power_consumed = 0;
+
+for (var i=0; i&lt;game_controller.MAP_W; i++)
+{
+    for (var j=0; j&lt;game_controller.MAP_H; j++)
+    {
+        stats_power_consumed += ds_grid_get(grid_power_delivered, i, j);
+    }
+}
+</string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>///Update taxes and pollution
+
+if (stats_pollution &gt; 100) {stats_pollution = 100;}
+
+stats_tax = 0;
+
+if (stats_pollution &gt;= 25)
+{
+    stats_tax = 20;
+}
+else if (stats_pollution &gt;= 50)
+{
+    stats_tax = 35;
+} 
+if (stats_pollution &gt;= 75)
+{
+    stats_tax = 70;
+}
+</string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>///Update month and income
+
+month_counter++;
+
+if (month_counter &gt;= room_speed * 60)
+{
+    stats_month++;
+
+    var income = stats_price * stats_power_consumed;
+    income -= income * (stats_tax / 100);
+    stats_money += income;
+    
+    stats_price += random_range(-0.005, 0.005);
+    if (stats_price &lt; 0.01) {stats_price = 0.01;}
+    
+    text = "You made $" + string(income) + " this month";
+    
+    show_popup(text, 10);
+    audio_play_sound(snd_month_end, 10, false);
+    
+    month_counter = 0;
+}
+</string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>///Update outages
+
+if (current_outage_timer &lt;= 0)
+{
+    if (outage)
+    {
+        stats_outages++;
+        
+        if (stats_outages &lt; 2)
+        {
+            show_popup("Power outage!", 3);
+            audio_play_sound(snd_bad, 10, false);    
+        }
+        else if (stats_outages &lt; 3)
+        {
+            show_popup("City won't allow another outage this month!", 5);
+            audio_play_sound(snd_bad, 10, false);    
+        }
+        else if (stats_outages &gt;= 3)
+        {
+            //Game over  
+        }
+    
+        current_outage_timer = outage_timer;
+    }
+    else if (current_outage_timer &lt; 0) {current_outage_timer = 0;}
+}
+else
+{
+    outage = false;
+    current_outage_timer--;
+}
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
     <event eventtype="8" enumb="74">
       <action>
         <libid>1</libid>
@@ -416,6 +630,9 @@ draw_text(text_x, 260, "Price:");
 draw_text(text_x + 40, 260, string(stats_price) + " $/kWh");
 draw_text(text_x, 280, "Tax:");
 draw_text(text_x + 35, 280, string(stats_tax) + "%");
+
+draw_set_font(fnt_arial_12);
+draw_text(text_x, 320, "Month: " + string(stats_month));
 
 draw_set_font(fnt_arial_8);
 draw_set_halign(fa_center);

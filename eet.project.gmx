@@ -4,7 +4,13 @@
     <Config>Configs\Default</Config>
   </Configs>
   <NewExtensions/>
-  <sounds name="sound"/>
+  <sounds name="sound">
+    <sound>sound\snd_button_1</sound>
+    <sound>sound\snd_month_end</sound>
+    <sound>sound\snd_button_2</sound>
+    <sound>sound\snd_error</sound>
+    <sound>sound\snd_bad</sound>
+  </sounds>
   <sprites name="sprites">
     <sprites name="tiles">
       <sprite>sprites\spr_grass</sprite>
@@ -46,6 +52,9 @@
     <sprite>sprites\spr_selection_white</sprite>
     <sprite>sprites\spr_selection_red</sprite>
     <sprite>sprites\spr_selection_green</sprite>
+    <sprites name="menu">
+      <sprite>sprites\spr_menu_button_start</sprite>
+    </sprites>
   </sprites>
   <backgrounds name="background">
     <background>background\bg_grass</background>
@@ -102,8 +111,14 @@
       <object>objects\obj_base_ui</object>
       <object>objects\obj_popup</object>
     </objects>
+    <objects name="menu">
+      <object>objects\obj_menu_logo</object>
+      <object>objects\obj_menu_button_start</object>
+      <object>objects\obj_menu_controller</object>
+    </objects>
   </objects>
   <rooms name="rooms">
+    <room>rooms\rm_menu</room>
     <room>rooms\rm_game</room>
   </rooms>
   <help>

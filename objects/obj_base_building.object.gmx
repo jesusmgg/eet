@@ -29,6 +29,7 @@
 
 image_index = irandom_range(0, 3);
 image_speed = 0;
+depth = 1;
 
 tile_x = 0;
 tile_y = 0;
@@ -46,11 +47,15 @@ block_center = noone;
 powered = 1;
 value = 1;
 
+power_consumed = 0;
+
 base_probability_grow = 200;
-base_probability_new_block = 1000;
+base_probability_new_block = 1500;
 
 probability_grow = base_probability_grow;
 probability_new_block = base_probability_new_block;
+
+initialized = false;
 
 </string>
           </argument>
@@ -75,6 +80,9 @@ probability_new_block = base_probability_new_block;
           <argument>
             <kind>1</kind>
             <string>///Adjust probabilities
+
+powered = ds_grid_get(game_controller.grid_powered, tile_x, tile_y);
+value = ds_grid_get(game_controller.grid_value, tile_x, tile_y);
 
 probability_grow = base_probability_grow * powered * value;
 probability_new_block = base_probability_new_block * powered * value;
@@ -104,6 +112,8 @@ if (is_block_center)
 {
     if (irandom(probability_new_block) == 1)
     {
+        base_probability_grow *= 1.5;    
+    
         var new_x = 0;
         var new_y = 0;
         
@@ -146,6 +156,8 @@ if (is_block_center)
 {
     if (irandom(probability_grow) == 1)
     {
+        base_probability_grow *= 1.5;
+    
         var grow_x = irandom_range(block_start_x, block_end_x);
         var grow_y = irandom_range(block_start_y, block_end_y);
 
