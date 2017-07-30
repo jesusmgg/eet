@@ -28,6 +28,7 @@
     </sprites>
     <sprites name="UI">
       <sprite>sprites\spr_logo</sprite>
+      <sprite>sprites\spr_logo_small</sprite>
       <sprites name="power">
         <sprite>sprites\spr_button_plant_coal</sprite>
         <sprite>sprites\spr_button_plant_oil</sprite>
@@ -39,6 +40,9 @@
       </sprites>
       <sprite>sprites\spr_bg_power_buttons</sprite>
     </sprites>
+    <sprite>sprites\spr_selection_white</sprite>
+    <sprite>sprites\spr_selection_red</sprite>
+    <sprite>sprites\spr_selection_green</sprite>
   </sprites>
   <backgrounds name="background">
     <background>background\bg_grass</background>
@@ -46,9 +50,18 @@
   <paths name="paths"/>
   <scripts name="scripts">
     <script>scripts\generate_block.gml</script>
+    <script>scripts\bind_object_to_selection.gml</script>
   </scripts>
+  <fonts name="fonts">
+    <font>fonts\fnt_arial_16</font>
+    <font>fonts\fnt_arial_12</font>
+    <font>fonts\fnt_arial_10</font>
+    <font>fonts\fnt_arial_8</font>
+  </fonts>
   <objects name="objects">
+    <object>objects\obj_game_controller</object>
     <object>objects\obj_camera</object>
+    <object>objects\obj_selection</object>
     <object>objects\obj_water</object>
     <object>objects\obj_asphalt</object>
     <objects name="city">
@@ -58,7 +71,10 @@
       <object>objects\obj_apartments</object>
       <object>objects\obj_building</object>
     </objects>
-    <object>objects\obj_game_controller</object>
+    <objects name="power">
+      <object>objects\obj_base_power</object>
+      <object>objects\obj_plant_coal</object>
+    </objects>
     <objects name="UI">
       <objects name="power">
         <object>objects\obj_button_plant_coal</object>

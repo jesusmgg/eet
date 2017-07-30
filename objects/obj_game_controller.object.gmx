@@ -28,14 +28,14 @@
             <string>///Constants
 
 MAP_W = 128;
-MAP_H = 128;
+MAP_H = 64;
 
 //grid_occupation tile status:
 TILE_FREE = 0;
 TILE_OCCUPIED = 1;
 TILE_RESERVED = 2;
 
-PADDING_X = 4;
+PADDING_X = 5;
 </string>
           </argument>
         </arguments>
@@ -59,9 +59,19 @@ PADDING_X = 4;
             <string>///Variables
 
 game_controller = self;
+selection_object = noone;
 
 grid_occupation = ds_grid_create(MAP_W, MAP_H);
 ds_grid_clear(grid_occupation, game_controller.TILE_FREE);
+
+stats_pollution = 0;
+stats_money = 0.0;
+stats_power_generated = 0;
+stats_power_consumed = 0;
+stats_tax = 0;
+stats_price = 0.0;
+
+ui_text_info = "Welcome!";
 
 randomize();
 </string>
@@ -86,8 +96,8 @@ randomize();
             <kind>1</kind>
             <string>///Generate first block
 
-var tile_x = irandom_range(10, 16);
-var tile_y = irandom_range(10, 16);
+var tile_x = irandom_range(24, 36);
+var tile_y = irandom_range(16, 24);
 
 generate_block(tile_x, tile_y, game_controller);
 </string>
@@ -112,15 +122,25 @@ generate_block(tile_x, tile_y, game_controller);
             <kind>1</kind>
             <string>///Instantiate UI objects
 
-instance_create(63, 40, obj_button_plant_coal);
-instance_create(63, 120, obj_button_plant_oil);
-instance_create(63, 200, obj_button_plant_nuclear);
-instance_create(63, 280, obj_button_plant_solar);
+var button_plant_coal = instance_create(63, 40, obj_button_plant_coal);
+var button_plant_oil = instance_create(63, 120, obj_button_plant_oil);
+var button_plant_nuclear = instance_create(63, 200, obj_button_plant_nuclear);
+var button_plant_solar = instance_create(63, 280, obj_button_plant_solar);
 
-instance_create(63, 380, obj_button_node_low);
-instance_create(63, 460, obj_button_node_high);
+var button_node_low = instance_create(63, 380, obj_button_node_low);
+var button_node_high = instance_create(63, 460, obj_button_node_high);
 
-instance_create(63, 560, obj_button_substation);
+var button_substation = instance_create(63, 560, obj_button_substation);
+
+button_plant_coal.game_controller = self;
+button_plant_oil.game_controller = self;
+button_plant_nuclear.game_controller = self;
+button_plant_solar.game_controller = self;
+
+button_node_low.game_controller = self;
+button_node_high.game_controller = self;
+
+button_substation.game_controller = self;
 </string>
           </argument>
         </arguments>
@@ -142,8 +162,6 @@ instance_create(63, 560, obj_button_substation);
           <argument>
             <kind>1</kind>
             <string>///Generate water (to pad game field for UI)
-
-
 
 for (var i=0;i&lt;game_controller.PADDING_X;i++)
 {
@@ -171,6 +189,31 @@ for (var i=game_controller.MAP_W-1;i&gt;limit;i--)
         );
     }
 }
+</string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>///Instantiate selection object
+
+selection_object = instance_create(0, 0, obj_selection);
+selection_object.game_controller = self;
+
 </string>
           </argument>
         </arguments>
@@ -206,6 +249,130 @@ for (var i=game_controller.MAP_W-1;i&gt;limit;i--)
           <argument>
             <kind>0</kind>
             <string>-1</string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>501</id>
+        <kind>0</kind>
+        <userelative>-1</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>1</exetype>
+        <functionname>action_draw_sprite</functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>5</kind>
+            <sprite>spr_bg_power_buttons</sprite>
+          </argument>
+          <argument>
+            <kind>0</kind>
+            <string>window_get_width() - 128</string>
+          </argument>
+          <argument>
+            <kind>0</kind>
+            <string>0</string>
+          </argument>
+          <argument>
+            <kind>0</kind>
+            <string>-1</string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>501</id>
+        <kind>0</kind>
+        <userelative>-1</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>1</exetype>
+        <functionname>action_draw_sprite</functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>5</kind>
+            <sprite>spr_logo_small</sprite>
+          </argument>
+          <argument>
+            <kind>0</kind>
+            <string>window_get_width() - 64</string>
+          </argument>
+          <argument>
+            <kind>0</kind>
+            <string>640 - 84</string>
+          </argument>
+          <argument>
+            <kind>0</kind>
+            <string>-1</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="8" enumb="64">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>///UI Text
+
+var text_x = window_get_width() - 124;
+
+draw_set_colour(c_black);
+
+draw_set_font(fnt_arial_12);
+draw_text(text_x, 20, "Info:");
+draw_set_font(fnt_arial_8);
+draw_text(text_x, 40, ui_text_info);
+
+draw_set_font(fnt_arial_12);
+draw_text(text_x, 120, "Power:");
+draw_set_font(fnt_arial_10);
+draw_text(text_x, 140, "Gen.:");
+draw_text(text_x + 35, 140, string(stats_power_generated) + "kWh");
+draw_text(text_x, 160, "Use:");
+draw_text(text_x + 35, 160, string(stats_power_consumed) + "kWh");
+draw_text(text_x, 180, "Pollution:");
+draw_text(text_x + 60, 180, + string(stats_pollution) + "%");
+
+draw_set_font(fnt_arial_12);
+draw_text(text_x, 220, "Finances:");
+draw_set_font(fnt_arial_10);
+draw_text(text_x, 240, "Money:");
+draw_text(text_x + 45, 240, "$" + string(stats_money));
+draw_text(text_x, 260, "Price:");
+draw_text(text_x + 40, 260, string(stats_money) + " $/kWh");
+draw_text(text_x, 280, "Tax:");
+draw_text(text_x + 35, 280, string(stats_tax) + "%");
+
+draw_set_font(fnt_arial_8);
+draw_set_halign(fa_center);
+draw_text(window_get_width()-64, 580, "Electric Energy Tycoon");
+
+draw_set_halign(fa_left);
+draw_set_font(fnt_arial_10);
+draw_text(text_x, 620, "FPS: " + string(fps));
+</string>
           </argument>
         </arguments>
       </action>
