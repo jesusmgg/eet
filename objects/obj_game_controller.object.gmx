@@ -141,14 +141,17 @@ randomize();
             <string>///Instantiate UI objects
 
 var button_plant_coal = instance_create(63, 40, obj_button_plant_coal);
-var button_plant_oil = instance_create(63, 120, obj_button_plant_oil);
-var button_plant_nuclear = instance_create(63, 200, obj_button_plant_nuclear);
-var button_plant_solar = instance_create(63, 280, obj_button_plant_solar);
+var button_plant_oil = instance_create(63, 110, obj_button_plant_oil);
+var button_plant_nuclear = instance_create(63, 180, obj_button_plant_nuclear);
+var button_plant_solar = instance_create(63, 250, obj_button_plant_solar);
 
-var button_node_low = instance_create(63, 380, obj_button_node_low);
-var button_node_high = instance_create(63, 460, obj_button_node_high);
+var button_node_low = instance_create(63, 330, obj_button_node_low);
+var button_node_high = instance_create(63, 400, obj_button_node_high);
 
-var button_substation = instance_create(63, 560, obj_button_substation);
+var button_substation = instance_create(63, 480, obj_button_substation);
+
+var button_power = instance_create(63, 552, obj_button_power);
+var button_value = instance_create(63, 606, obj_button_value);
 
 button_plant_coal.game_controller = self;
 button_plant_oil.game_controller = self;
@@ -159,10 +162,6 @@ button_node_low.game_controller = self;
 button_node_high.game_controller = self;
 
 button_substation.game_controller = self;
-
-var position_x = window_get_width() - 64;
-var button_power = instance_create(position_x, 420, obj_button_power);
-var button_value = instance_create(position_x, 480, obj_button_value);
 
 button_power.game_controller = self;
 button_value.game_controller = self;
@@ -425,6 +424,67 @@ draw_text(window_get_width()-64, 590, "Electric Energy Tycoon");
 draw_set_halign(fa_left);
 draw_set_font(fnt_arial_10);
 draw_text(text_x, 620, "FPS: " + string(fps));
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="8" enumb="0">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>///Draw overlays
+
+if (game_controller.show_grid_powered)
+{    
+    for (var i=0; i&lt;game_controller.MAP_W; i++)
+    {
+        for (var j=0; j&lt;game_controller.MAP_H; j++)
+        {
+            var tile_status = ds_grid_get(game_controller.grid_powered, i, j);
+            if (tile_status == game_controller.TILE_POWERED_TRUE)
+            {
+                draw_sprite(spr_selection_green, 0, i*32, j*32);
+            }
+            else if (tile_status == game_controller.TILE_POWERED_FALSE)
+            {
+                draw_sprite(spr_selection_red, 0, i*32, j*32);
+            }
+        }
+    }
+}
+
+else if (game_controller.show_grid_value)
+{    
+    for (var i=0; i&lt;game_controller.MAP_W; i++)
+    {
+        for (var j=0; j&lt;game_controller.MAP_H; j++)
+        {
+            var tile_status = ds_grid_get(game_controller.grid_value, i, j);
+            if (tile_status == game_controller.TILE_VALUE_HIGH)
+            {
+                draw_sprite(spr_selection_green, 0, i*32, j*32);
+            }
+            else if (tile_status == game_controller.TILE_VALUE_LOW)
+            {
+                draw_sprite(spr_selection_red, 0, i*32, j*32);
+            }
+        }
+    }
+}
 </string>
           </argument>
         </arguments>

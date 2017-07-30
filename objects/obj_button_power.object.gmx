@@ -50,9 +50,35 @@ event_inherited();
             <kind>1</kind>
             <string>///Set info text
 
-var info = "Powered zones overlay";
+var info = "Show powered zones";
 
 game_controller.ui_text_info = info;
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="6" enumb="4">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>/// Toggle power overlay
+
+game_controller.show_grid_powered = !(game_controller.show_grid_powered);
+game_controller.show_grid_value = false;
 </string>
           </argument>
         </arguments>
