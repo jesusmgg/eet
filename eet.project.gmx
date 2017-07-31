@@ -4,10 +4,125 @@
     <Config>Configs\Default</Config>
   </Configs>
   <NewExtensions/>
-  <sounds name="sound"/>
-  <sprites name="sprites"/>
-  <backgrounds name="background"/>
+  <sounds name="sound">
+    <sound>sound\snd_button_1</sound>
+    <sound>sound\snd_month_end</sound>
+    <sound>sound\snd_button_2</sound>
+    <sound>sound\snd_error</sound>
+    <sound>sound\snd_bad</sound>
+  </sounds>
+  <sprites name="sprites">
+    <sprites name="tiles">
+      <sprite>sprites\spr_grass</sprite>
+      <sprite>sprites\spr_water</sprite>
+      <sprite>sprites\spr_asphalt</sprite>
+    </sprites>
+    <sprites name="city">
+      <sprite>sprites\spr_house_small</sprite>
+      <sprite>sprites\spr_house_big</sprite>
+      <sprite>sprites\spr_apartments</sprite>
+      <sprite>sprites\spr_building</sprite>
+    </sprites>
+    <sprites name="power">
+      <sprite>sprites\spr_plant_coal</sprite>
+      <sprite>sprites\spr_plant_oil</sprite>
+      <sprite>sprites\spr_plant_nuclear</sprite>
+      <sprite>sprites\spr_plant_solar</sprite>
+      <sprite>sprites\spr_node_low</sprite>
+      <sprite>sprites\spr_node_high</sprite>
+      <sprite>sprites\spr_substation</sprite>
+    </sprites>
+    <sprites name="UI">
+      <sprite>sprites\spr_logo</sprite>
+      <sprite>sprites\spr_logo_small</sprite>
+      <sprites name="power">
+        <sprite>sprites\spr_button_plant_coal</sprite>
+        <sprite>sprites\spr_button_plant_oil</sprite>
+        <sprite>sprites\spr_button_plant_nuclear</sprite>
+        <sprite>sprites\spr_button_plant_solar</sprite>
+        <sprite>sprites\spr_button_node_low</sprite>
+        <sprite>sprites\spr_button_node_high</sprite>
+        <sprite>sprites\spr_button_substation</sprite>
+      </sprites>
+      <sprite>sprites\spr_bg_power_buttons</sprite>
+      <sprite>sprites\spr_bg_popup</sprite>
+      <sprite>sprites\spr_button_power</sprite>
+      <sprite>sprites\spr_button_value</sprite>
+      <sprite>sprites\spr_game_over</sprite>
+    </sprites>
+    <sprite>sprites\spr_selection_white</sprite>
+    <sprite>sprites\spr_selection_red</sprite>
+    <sprite>sprites\spr_selection_green</sprite>
+    <sprites name="menu">
+      <sprite>sprites\spr_menu_button_start</sprite>
+    </sprites>
+  </sprites>
+  <backgrounds name="background">
+    <background>background\bg_grass</background>
+  </backgrounds>
   <paths name="paths"/>
+  <scripts name="scripts">
+    <script>scripts\generate_block.gml</script>
+    <script>scripts\show_popup.gml</script>
+    <script>scripts\bind_object_to_selection.gml</script>
+  </scripts>
+  <fonts name="fonts">
+    <font>fonts\fnt_arial_16</font>
+    <font>fonts\fnt_arial_12</font>
+    <font>fonts\fnt_arial_10</font>
+    <font>fonts\fnt_arial_8</font>
+  </fonts>
+  <objects name="objects">
+    <object>objects\obj_game_controller</object>
+    <object>objects\obj_camera</object>
+    <object>objects\obj_selection</object>
+    <object>objects\obj_water</object>
+    <object>objects\obj_asphalt</object>
+    <objects name="city">
+      <object>objects\obj_base_building</object>
+      <object>objects\obj_house_small</object>
+      <object>objects\obj_house_big</object>
+      <object>objects\obj_apartments</object>
+      <object>objects\obj_building</object>
+    </objects>
+    <objects name="power">
+      <object>objects\obj_base_power</object>
+      <object>objects\obj_plant_coal</object>
+      <object>objects\obj_plant_oil</object>
+      <object>objects\obj_plant_nuclear</object>
+      <object>objects\obj_plant_solar</object>
+      <object>objects\obj_node_low</object>
+      <object>objects\obj_node_high</object>
+      <object>objects\obj_substation</object>
+    </objects>
+    <objects name="UI">
+      <object>objects\obj_button_power</object>
+      <object>objects\obj_button_value</object>
+      <objects name="power">
+        <object>objects\obj_button_plant_coal</object>
+        <object>objects\obj_button_plant_oil</object>
+        <object>objects\obj_button_plant_nuclear</object>
+        <object>objects\obj_button_plant_solar</object>
+        <object>objects\obj_button_node_low</object>
+        <object>objects\obj_button_node_high</object>
+        <object>objects\obj_button_substation</object>
+        <object>objects\obj_base_button_power</object>
+      </objects>
+      <object>objects\obj_base_button</object>
+      <object>objects\obj_base_ui</object>
+      <object>objects\obj_popup</object>
+      <object>objects\obj_game_over</object>
+    </objects>
+    <objects name="menu">
+      <object>objects\obj_menu_logo</object>
+      <object>objects\obj_menu_button_start</object>
+      <object>objects\obj_menu_controller</object>
+    </objects>
+  </objects>
+  <rooms name="rooms">
+    <room>rooms\rm_menu</room>
+    <room>rooms\rm_game</room>
+  </rooms>
   <help>
     <rtf>help.rtf</rtf>
   </help>
